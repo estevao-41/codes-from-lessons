@@ -38,13 +38,12 @@ class Books:
         self.id = di
         l = [self.name, self.author, self.year, self.genre, self.id]
         books.append(l)
-        file = open("books.txt", "a")
-        for i in l:
-            i = str(i)
+        file = open("books.txt", "w")
+        for i in books:
+            i = " ".join(i)
             file.write(i)
-            file.write(" ")
+            file.write("\n")
             pass
-        file.write("\n")
         file.close()
         print("\n")
 
@@ -120,24 +119,52 @@ class Books:
 
     def showallbook(self, books):
         for i in range(len(books)):
-            for j in range(len(books)):
-                print("\n")
-                print("Name of a book:", books[i][j])
-                print("Author of a book:", books[i][j])
-                print("Year of a book:", books[i][j])
-                print("Genre of a book:", books[i][j])
-                print("ID of a book:", books[i][j])
+            print("\n")
+            print("Name of a book:", books[i][0])
+            print("Author of a book:", books[i][1])
+            print("Year of a book:", books[i][2])
+            print("Genre of a book:", books[i][3])
+            print("ID of a book:", books[i][4])
+            print("\n")
         pass
+
 
 
 class Reader:
     name = None
     id = None
-    bookslist = None
-    pass
+
+    def __init__(self, reader):
+        if Path("reader.txt").exists():
+            file = open("reader.txt", "r")
+            for i in file:
+                i = i.split()
+                reader.append(i)
+
+        else:
+            file = open("reader.txt", "w")
+        file.close()
+        pass
+
+    def addreader(self, reader):
+        print("Name of a reader:")
+        self.name = input()
+        print("ID of a reader:")
+        self.id = input()
+        l = [self.name, self.id]
+        reader.append(l)
+        file = open("reader.txt", "w")
+        for i in reader:
+            i = " ".join(i)
+            file.write(i)
+            file.write("\n")
+        file.close()
+        pass
 
 books = []
+reader = []
 book = Books(books)
+readers = Reader(reader)
 while True:
     print("1.Add new book into fond")
     print("2.Delete book from fond")
@@ -175,7 +202,9 @@ while True:
         case "4":
             book.showallbook(books)
             pass
+        case "5":
+            readers.addreader(reader)
+            pass
         case _:
             print("Need a number")
             print("\n\n")
-
